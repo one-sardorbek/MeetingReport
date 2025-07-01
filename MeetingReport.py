@@ -8,13 +8,13 @@ import pandas as pd
 
 def fix_extra_closing_brackets(s):
     s = s.strip()
-    # Try parsing directly first
+  
     try:
         return json.loads(s)
     except json.JSONDecodeError:
-        pass  # Continue if it fails
+        pass  
 
-    # Try removing extra closing brackets at the end
+    
     while s.endswith('}') or s.endswith(']'):
         s = s[:-1].strip()
         try:
@@ -22,14 +22,13 @@ def fix_extra_closing_brackets(s):
         except json.JSONDecodeError:
             continue
 
-    # If still not valid, raise error
     raise ValueError("Could not fix the JSON string.")
 
-# --- Load Excel and parse each row ---
+
 path = "C:\\Users\\sardorbek\\Desktop\\source\\raw_data.xlsx"
 df = pd.read_excel(path, sheet_name='Sheet1')
 
-# Apply cleaning parser
+
 df['parsed'] = df['raw_content'].apply(fix_extra_closing_brackets)
 
 
