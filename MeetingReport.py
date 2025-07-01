@@ -2,11 +2,9 @@ import pandas as pd
 import numpy as np
 import json
 import re
-import json
-import pandas as pd
 
 
-def fix_extra_closing_brackets(s):
+def fix_extra_closing_bracke(s):
     s = s.strip()
   
     try:
