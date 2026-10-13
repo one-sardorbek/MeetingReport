@@ -79,13 +79,4 @@ python script_name.py
 
 On success, the output workbook is created at `output_path`.
 
-## Known issues / things to fix
 
-- **Function name mismatch:** the function is defined as `fix_extra_closing_bracke` but called as `fix_extra_closing_brackets`, which raises a `NameError`. Rename one so they match.
-- **Index misalignment in `fact_communication`:** `calendar_id`, `audio_id`, `video_id` and `transcript_id` are taken from dimension tables that were built after dropping null rows, so they are assigned by index position and can end up attached to the wrong communication (or be `NaN`). Map them by value (as done for `comm_type` and `subject`) instead.
-- **`dim_user` duplicates:** `drop_duplicates()` only removes fully identical rows, so the same email can appear several times (e.g. once with a name and once without). Consider deduplicating by email.
-- **`comm_type_id` mapping:** any type other than `call` is assigned `3`, so multiple distinct types would share one ID. Use a proper mapping or sequential IDs.
-- **Speaker matching is heuristic:** name matching via letter containment can produce false positives, and `isSpeaker` is resolved by name, which may link a speaker to the wrong user.
-- **Performance:** repeated `pd.concat` inside loops is slow on large inputs. Collect rows in a list and build the DataFrame once.
-- Hard-coded Windows paths should be replaced with configurable arguments or environment variables.
-- The `# dimm_comm_type` comment contains a typo (`dimm`).
